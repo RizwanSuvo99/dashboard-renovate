@@ -1,21 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter, Sora } from 'next/font/google';
 import { themeRepo } from '@/lib/repositories';
 import { themeToCssVars, modeColors } from '@/design-system/theme';
 import { Providers } from './providers';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const sora = Sora({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-});
+// Fonts: tokens.ts + theme.ts wire the actual family via CSS vars
+// (--font-sans / --font-display). The defaults fall through to a system
+// stack, so the dashboard renders correctly without network access. To
+// re-enable Google fonts, import next/font/google here and append the
+// returned className to <html>.
 
 export const metadata: Metadata = {
   title: {
@@ -45,7 +38,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${sora.variable}`}
       style={{ cssText: inlineStyle } as React.CSSProperties}
       data-sidebar={initial.sidebar}
       data-preset={initial.presetId}
